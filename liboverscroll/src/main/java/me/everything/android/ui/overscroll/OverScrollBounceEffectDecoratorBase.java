@@ -81,15 +81,7 @@ public abstract class OverScrollBounceEffectDecoratorBase implements IOverScroll
             = new GestureDetector.SimpleOnGestureListener() {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-//            int height = getView().getHeight() - getView().getPaddingBottom() - getView().getPaddingTop();
-//            int bottom = ((ViewGroup) getView()).getChildAt(0).getHeight();
-//            mScroller.fling(getView().getScrollX(),
-//                    getView().getScrollY(),
-//                    Math.round(velocityX), Math.round(velocityY), 0, 0, 0,
-//                    Math.max(0, bottom - height), 0, height / 2);
-//            mScroller.computeScrollOffset();
-//            if (mScroller.getFinalY() <
-
+            mCurrentState.handleFlingEvent(e1, e2, velocityX, velocityY);
             return false;
         }
     };
@@ -154,6 +146,16 @@ public abstract class OverScrollBounceEffectDecoratorBase implements IOverScroll
         boolean handleUpOrCancelTouchEvent(MotionEvent event);
 
         /**
+         * Handle fling event.
+         * @param e1 the start touch event
+         * @param e2 the end touch event
+         * @param velocityX the velocity of the fling action on the x-axes
+         * @param velocityY the velocity of the fling action on the y-axes
+         * @return true if touch is consumed false otherwise
+         */
+        boolean handleFlingEvent(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY);
+
+        /**
          * Handle a transition onto this state, as it becomes 'current' state.
          *
          * @param fromState
@@ -213,6 +215,12 @@ public abstract class OverScrollBounceEffectDecoratorBase implements IOverScroll
 
         @Override
         public boolean handleUpOrCancelTouchEvent(MotionEvent event) {
+            return false;
+        }
+
+        @Override
+        public boolean handleFlingEvent(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            // TODO: Handle this
             return false;
         }
 
@@ -307,6 +315,12 @@ public abstract class OverScrollBounceEffectDecoratorBase implements IOverScroll
         }
 
         @Override
+        public boolean handleFlingEvent(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            // TODO: Handle this
+            return false;
+        }
+
+        @Override
         public void handleEntryTransition(IDecoratorState fromState) {
             mCurrDragState = (mStartAttr.mDir ? STATE_DRAG_START_SIDE : STATE_DRAG_END_SIDE);
             mStateListener.onOverScrollStateChange(OverScrollBounceEffectDecoratorBase.this, fromState.getStateId(), this.getStateId());
@@ -360,6 +374,12 @@ public abstract class OverScrollBounceEffectDecoratorBase implements IOverScroll
         public boolean handleUpOrCancelTouchEvent(MotionEvent event) {
             // Flush all touches down the drain till animation is over.
             return true;
+        }
+
+        @Override
+        public boolean handleFlingEvent(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            // TODO: Handle this
+            return false;
         }
 
         @Override
